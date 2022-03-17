@@ -1,4 +1,4 @@
-package com.example.agro.controllers;
+package com.example.agro.controllers.dto;
 
 import com.example.agro.models.Funcionario;
 import lombok.Getter;

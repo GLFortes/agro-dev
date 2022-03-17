@@ -1,4 +1,4 @@
-package com.example.agro.controllers;
+package com.example.agro.controllers.dto;
 
 import com.example.agro.models.Fazenda;
 import lombok.Getter;

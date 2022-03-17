@@ -1,7 +1,9 @@
-package com.example.agro.controllers;
+package com.example.agro.controllers.dto;
 
 import com.example.agro.models.Empresa;
 import lombok.Getter;
+
+import java.util.List;
 
 @Getter
 public class EmpresaDto {
@@ -18,4 +20,9 @@ public class EmpresaDto {
         this.cnpj = empresa.getCnpj();
         this.endereco = empresa.getEndereco();
     }
+
+    public static List<EmpresaDto> converter(List<Empresa> empresas){
+        return empresas.stream().map(EmpresaDto::new).collect(java.util.stream.Collectors.toList());
+    }
+
 }
