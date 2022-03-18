@@ -36,7 +36,8 @@ public class EmpresaService {
         repository.deleteById(id);
     }
 
-    public Optional<Empresa> buscaEmpresa(Long id) {
-        return repository.findById(id);
+    public Optional<Empresa> buscaEmpresa(String nome) {
+        Empresa empresa = repository.findByNome(nome);
+        return Optional.ofNullable(empresa);
     }
 }

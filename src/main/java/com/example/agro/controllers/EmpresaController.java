@@ -31,21 +31,31 @@ public class EmpresaController {
     }
 
     @PostMapping
-    public Empresa adicionarEmpresa(@RequestBody EmpresaForm form){
-        return service.adicionaEmpresa(form.converter());
+    @Transactional
+    public ResponseEntity<EmpresaDto> adicionarEmpresa(@RequestBody EmpresaForm form, UriComponentsBuilder uriBuilder){
+        Empresa empresa = form.converter();
+
+        URI uri = uriBuilder.path("/empresa/{id}").buildAndExpand(empresa.getId()).toUri();
+        return ResponseEntity.created(uri).body(new EmpresaDto(service.adicionaEmpresa(empresa)));
 
     }
 
     @PutMapping("/{id}")
     @Transactional
-    public Empresa atualizaEmpresa(@PathVariable Long id, @RequestBody EmpresaForm form){
-        return service.atualizaEmpresa(id, form.converter());
+    public ResponseEntity<EmpresaDto> atualizaEmpresa(@PathVariable Long id, @RequestBody EmpresaForm form){
+        Optional<Empresa> empresa = service.buscaEmpresa(String.valueOf(id));
+        if(empresa.isPresent()){
+            Empresa empresaAtualizada = service.atualizaEmpresa(id, form.converter());
+            return ResponseEntity.ok(new EmpresaDto(empresaAtualizada));
+        }
+        return ResponseEntity.notFound().build();
+//        return service.atualizaEmpresa(id, form.converter());
     }
 
     @DeleteMapping("/{id}")
     @Transactional
     public ResponseEntity<?> deletaEmpresa(@PathVariable Long id){
-        Optional<Empresa> empresa = service.buscaEmpresa(id);
+        Optional<Empresa> empresa = service.buscaEmpresa(String.valueOf(id));
         if(empresa.isPresent()){
             service.deletaEmpresa(id);
             return ResponseEntity.ok().build();

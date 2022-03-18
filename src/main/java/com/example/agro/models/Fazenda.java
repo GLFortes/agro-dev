@@ -26,5 +26,6 @@ public class Fazenda {
         this.endereco = endereco;
         this.quilos = quilos;
         this.grao = grao;
+        this.empresa = grao.getEmpresa();
     }
 }

@@ -1,7 +1,10 @@
 package com.example.agro.controllers.dto;
 
+import com.example.agro.models.Empresa;
 import com.example.agro.models.Fazenda;
 import lombok.Getter;
+
+import java.util.List;
 
 @Getter
 public class FazendaDto {
@@ -16,5 +19,9 @@ public class FazendaDto {
         this.nome = fazenda.getNome();
         this.endereco = fazenda.getEndereco();
         this.quilos = fazenda.getQuilos();
+    }
+
+    public static List<FazendaDto> converter(List<Fazenda> fazendas) {
+        return fazendas.stream().map(FazendaDto::new).collect(java.util.stream.Collectors.toList());
     }
 }
