@@ -5,6 +5,7 @@ import com.example.agro.repositories.FazendaRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class FazendaService {
@@ -25,5 +26,14 @@ public class FazendaService {
         fazendaRepository.deleteById(id);
     }
 
+    public Optional<Fazenda> buscarPorId(Long id){
+        return fazendaRepository.findById(id);
+    }
 
+    public List<Fazenda> acharPorEmpresa(Long id){
+        return (List<Fazenda>) fazendaRepository.findByEmpresa(id);
+    }
 }
+
+
+

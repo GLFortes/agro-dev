@@ -12,11 +12,13 @@ public class GraoDto {
     private Long id;
     private String nome;
     private Empresa nomeEmpresa;
+    private Long tempoColeta;
 
     public GraoDto(Grao grao){
         this.id = grao.getId();
         this.nome = grao.getNome();
         this.nomeEmpresa = grao.getEmpresa();
+        this.tempoColeta = grao.getTempoColeta();
     }
 
     public static List<GraoDto> converter(List<Grao> graos){

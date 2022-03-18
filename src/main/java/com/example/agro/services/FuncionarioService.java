@@ -1,10 +1,12 @@
 package com.example.agro.services;
 
 import com.example.agro.models.Funcionario;
+import com.example.agro.models.Grao;
 import com.example.agro.repositories.FuncionarioRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class FuncionarioService {
@@ -24,6 +26,10 @@ public class FuncionarioService {
 
     public void deletar(Long id){
         funcionarioRepository.deleteById(id);
+    }
+
+    public Optional<Funcionario> buscarPorId(Long id){
+        return funcionarioRepository.findById(id);
     }
 
 }

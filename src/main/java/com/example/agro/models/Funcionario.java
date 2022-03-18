@@ -18,9 +18,9 @@ public class Funcionario {
     private String endereco;
     private String telefone;
     private String sexo;
-    @JsonFormat(pattern="dd/MM/yyyy")
+//    @JsonFormat(pattern="dd/MM/yyyy")
     private String dataNascimento;
-    @JsonFormat(pattern="dd/MM/yyyy")
+//    @JsonFormat(pattern="dd/MM/yyyy")
     private String admissao;
 
     @OneToOne

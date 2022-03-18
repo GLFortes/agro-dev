@@ -17,7 +17,7 @@ public class FuncionarioDto {
     private String telefone;
     private String sexo;
     private String dataNascimento;
-    private String nomeEmpresa;
+    private Empresa empresa;
 
     public FuncionarioDto(Funcionario funcionario) {
         this.id = funcionario.getId();
@@ -28,7 +28,7 @@ public class FuncionarioDto {
         this.telefone = funcionario.getTelefone();
         this.sexo = funcionario.getSexo();
         this.dataNascimento = funcionario.getDataNascimento();
-        this.nomeEmpresa = funcionario.getEmpresa().getNome();
+        this.empresa = funcionario.getEmpresa();
     }
 
 //    public FuncionarioDto(Funcionario funcionario){

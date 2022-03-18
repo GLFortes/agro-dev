@@ -1,10 +1,13 @@
 package com.example.agro.controllers;
 
 import com.example.agro.controllers.dto.EmpresaDto;
+import com.example.agro.controllers.dto.FazendaDto;
 import com.example.agro.controllers.dto.FuncionarioDto;
 import com.example.agro.controllers.forms.EmpresaForm;
+import com.example.agro.controllers.forms.FazendaForm;
 import com.example.agro.controllers.forms.FuncionarioForm;
 import com.example.agro.models.Empresa;
+import com.example.agro.models.Fazenda;
 import com.example.agro.models.Funcionario;
 import com.example.agro.repositories.EmpresaRepository;
 import com.example.agro.services.FuncionarioService;
@@ -14,9 +17,11 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.transaction.Transactional;
+import javax.validation.Valid;
 import java.net.URI;
 import java.text.ParseException;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/funcionario")
@@ -37,14 +42,32 @@ public class FuncionarioController {
         return FuncionarioDto.converter(funcionarios);
     }
 
+//    @PostMapping
+//    @Transactional
+//    public Funcionario adicionarFuncionario(@RequestBody FuncionarioForm form){
+//        return service.cadastrarFuncionario(form.converter());
+//    }
+
     @PostMapping
     @Transactional
-    public ResponseEntity<FuncionarioDto> adicionarFuncionario(@RequestBody FuncionarioForm form, UriComponentsBuilder uriBuilder) throws ParseException {
-        Funcionario funcionario = form.converter(empresaRepository);
-        service.cadastrarFuncionario(funcionario);
+    public ResponseEntity<FuncionarioDto> cadastrar(@RequestBody @Valid FuncionarioForm form, UriComponentsBuilder uriBuilder){
+        Funcionario novoFuncionario = service.cadastrarFuncionario(form.converter());
+        URI uri = UriComponentsBuilder.fromPath("/funcionario/{id}").buildAndExpand(novoFuncionario.getId()).toUri();
+        return ResponseEntity.created(uri).body(new FuncionarioDto(novoFuncionario));
+    }
 
-        URI uri = uriBuilder.path("/funcionario/{id}").buildAndExpand(funcionario.getId()).toUri();
-        return ResponseEntity.created(uri).body(new FuncionarioDto(service.cadastrarFuncionario(funcionario)));
+//    @PutMapping("/{id}")
+
+    @DeleteMapping("/{id}")
+    @Transactional
+    public ResponseEntity<?> removerFuncionario(@PathVariable Long id){
+        Optional<Funcionario> funcionario = service.buscarPorId(id);
+        if (funcionario.isPresent()){
+            service.deletar(id);
+            return ResponseEntity.ok().build();
+        }
+        return ResponseEntity.notFound().build();
+    }
 
     }
-}
+

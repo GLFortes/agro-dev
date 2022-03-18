@@ -16,6 +16,7 @@ import javax.transaction.Transactional;
 import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/fazenda")
@@ -36,8 +37,25 @@ public class FazendaController {
     @PostMapping
     @Transactional
     public ResponseEntity<FazendaDto> cadastrar(@RequestBody @Valid FazendaForm form, UriComponentsBuilder uriBuilder){
-        Fazenda fazenda = fazendaService.adicionarFazenda(form.converter(graoRepository));
-        URI uri = uriBuilder.path("/fazenda/{id}").buildAndExpand(fazenda.getId()).toUri();
+        Fazenda fazenda = fazendaService.adicionarFazenda(form.converter());
+        URI uri = UriComponentsBuilder.fromPath("/fazenda/{id}").buildAndExpand(fazenda.getId()).toUri();
         return ResponseEntity.created(uri).body(new FazendaDto(fazenda));
+    }
+
+    @DeleteMapping("/{id}")
+    @Transactional
+    public ResponseEntity<?> deletar(@PathVariable Long id){
+        Optional<Fazenda> fazenda = fazendaService.buscarPorId(id);
+        if(fazenda.isPresent()){
+            fazendaService.deletaFazenda(id);
+            return ResponseEntity.ok().build();
+        }
+        return ResponseEntity.notFound().build();
+    }
+
+    @GetMapping("/{id}")
+    public List<FazendaDto> fazendasPorEmpresa(@PathVariable Long id){
+        List<Fazenda> fazendas = fazendaService.acharPorEmpresa(id);
+        return FazendaDto.converter(fazendas);
     }
 }

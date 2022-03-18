@@ -1,7 +1,10 @@
 package com.example.agro.controllers;
 
+import com.example.agro.controllers.dto.FazendaDto;
 import com.example.agro.controllers.dto.GraoDto;
+import com.example.agro.controllers.forms.FazendaForm;
 import com.example.agro.controllers.forms.GraoForm;
+import com.example.agro.models.Fazenda;
 import com.example.agro.models.Grao;
 import com.example.agro.repositories.EmpresaRepository;
 import com.example.agro.services.EmpresaService;
@@ -12,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.transaction.Transactional;
+import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
 import java.util.Optional;
@@ -49,6 +53,14 @@ public class GraoController {
     public Grao adicionaGrao(@RequestBody GraoForm form){
         return service.adicionaGrao(form.converter());
     }
+
+//    @PostMapping
+//    @Transactional
+//    public ResponseEntity<GraoDto> cadastrar(@RequestBody @Valid GraoForm form, UriComponentsBuilder uriBuilder){
+//        Grao novoGrao = service.adicionaGrao(form.converter());
+//        URI uri = UriComponentsBuilder.fromPath("/graos/{id}").buildAndExpand(novoGrao.getId()).toUri();
+//        return ResponseEntity.created(uri).body(new GraoDto(novoGrao));
+//    }
 
 //    @PutMapping("/{id}")
 //    @Transactional
