@@ -3,6 +3,7 @@ package com.example.agro.models;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Data
 @Entity
@@ -13,6 +14,7 @@ public class Fazenda {
     private String nome;
     private String endereco;
     private Double quilos;
+    private Date dataUltimaColheita;
 
     @OneToOne
     private Grao grao;
@@ -21,11 +23,12 @@ public class Fazenda {
 
     public Fazenda(){}
 
-    public Fazenda(String nome, String endereco, Double quilos, Grao grao){
+    public Fazenda(String nome, String endereco, Double quilos, Grao grao, Date dataUltimaColheita) {
         this.nome = nome;
         this.endereco = endereco;
         this.quilos = quilos;
         this.grao = grao;
         this.empresa = grao.getEmpresa();
+        this.dataUltimaColheita = dataUltimaColheita;
     }
 }

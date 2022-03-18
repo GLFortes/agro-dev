@@ -6,4 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface GraoRepository extends JpaRepository<Grao, Long> {
+    //Localizar grao por empresa
+    Iterable<Grao> findByEmpresaId(Long id);
 }

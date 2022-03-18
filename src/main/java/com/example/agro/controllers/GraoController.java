@@ -84,4 +84,11 @@ public class GraoController {
         return ResponseEntity.notFound().build();
     }
 
+    @GetMapping("/empresa/{id}")
+    public List<GraoDto> listarPorEmpresa(@PathVariable Long id){
+        List<Grao> graos = service.buscarPorEmpresa(id);
+        return GraoDto.converter(graos);
+    }
 }
+
+

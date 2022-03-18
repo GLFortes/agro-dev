@@ -38,5 +38,9 @@ public class GraoService {
     public Optional<Grao> buscaGraoPorId(Long id) {
         return graoRepository.findById(id);
     }
+
+    public List<Grao> buscarPorEmpresa(Long id){
+        return (List<Grao>) graoRepository.findByEmpresaId(id);
+    }
 }
 
