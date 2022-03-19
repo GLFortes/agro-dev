@@ -58,4 +58,16 @@ public class FazendaController {
         List<Fazenda> fazendas = fazendaService.acharPorEmpresa(id);
         return FazendaDto.converter(fazendas);
     }
+
+    @PutMapping("/aumentar/{id}")
+
+    public ResponseEntity<FazendaDto> aumentarGraos(@PathVariable Long id, @RequestBody FazendaDto fazendaDto, Double quantidade){
+        Optional<Fazenda> optional = fazendaService.buscarPorId(id);
+        if(optional.isPresent()){
+            Fazenda fazenda = fazendaDto.aumentaQuantidade(id, quantidade);
+            return ResponseEntity.ok(new FazendaDto(fazenda));
+        }
+        return ResponseEntity.notFound().build();
+
+    }
 }

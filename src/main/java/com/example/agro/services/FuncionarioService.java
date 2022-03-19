@@ -32,4 +32,8 @@ public class FuncionarioService {
         return funcionarioRepository.findById(id);
     }
 
+    public List<Funcionario> acharPorEmpresa(Long id){
+        return (List<Funcionario>) funcionarioRepository.findByEmpresa(id);
+    }
+
 }

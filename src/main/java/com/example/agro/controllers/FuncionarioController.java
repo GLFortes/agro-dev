@@ -69,5 +69,11 @@ public class FuncionarioController {
         return ResponseEntity.notFound().build();
     }
 
+    @GetMapping("/funcionarioEmpresa/{id}")
+    public List<FuncionarioDto> listarPorEmpresa(@PathVariable Long id){
+        List<Funcionario> funcionarios = service.acharPorEmpresa(id);
+        return FuncionarioDto.converter(funcionarios);
+    }
+
     }
 
