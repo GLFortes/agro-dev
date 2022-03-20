@@ -59,13 +59,6 @@ public class GraoController {
         return GraoDto.converter(graos);
     }
 
-    //Retorna uma lista de grãos ordenados pelo nome (não consegui implementar a contagem por quantidades)
-    @GetMapping("/buscarOrdenado/{id}")
-    public List<GraoDto> listarPorGraoOrdenado(@PathVariable Long id){
-        List<Grao> graos = service.buscarPorGraoOrdenado(id);
-        return GraoDto.converter(graos);
-    }
-
 }
 
 

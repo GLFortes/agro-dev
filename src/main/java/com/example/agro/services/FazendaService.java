@@ -55,6 +55,10 @@ public class FazendaService {
         return fazendaRepository.countByEmpresaId(id);
     }
 
+    public List<Fazenda> ordenar(Long id){
+        return fazendaRepository.findByEmpresaIdOrderByQuilosDesc(id);
+    }
+
 
 
 }
