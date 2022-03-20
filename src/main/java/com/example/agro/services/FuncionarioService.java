@@ -36,4 +36,7 @@ public class FuncionarioService {
         return (List<Funcionario>) funcionarioRepository.findByEmpresa(id);
     }
 
+    public int quantidadeDeFuncionarios(Long id) {
+        return funcionarioRepository.countByEmpresa(id);
+    }
 }

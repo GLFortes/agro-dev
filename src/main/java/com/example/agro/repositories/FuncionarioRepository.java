@@ -11,4 +11,8 @@ public interface FuncionarioRepository extends JpaRepository<Funcionario, Long> 
     //localizar por id de empresa
     @Query(value = "SELECT f FROM Funcionario f WHERE f.empresa.id = ?1")
     Iterable<Funcionario> findByEmpresa(Long id);
+
+    //contar por empresa
+    @Query(value = "SELECT COUNT(f) FROM Funcionario f WHERE f.empresa.id = ?1")
+    int countByEmpresa(Long id);
 }

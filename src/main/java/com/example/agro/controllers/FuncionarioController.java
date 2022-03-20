@@ -75,5 +75,11 @@ public class FuncionarioController {
         return FuncionarioDto.converter(funcionarios);
     }
 
+    @GetMapping("/contarPorEmpresa/{id}")
+    public int contarPorEmpresa(@PathVariable Long id){
+        int quantidade = service.quantidadeDeFuncionarios(id);
+        return quantidade;
+    }
+
     }
 

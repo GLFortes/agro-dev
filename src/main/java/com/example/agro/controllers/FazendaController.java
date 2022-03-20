@@ -2,6 +2,7 @@ package com.example.agro.controllers;
 
 import com.example.agro.controllers.dto.EmpresaDto;
 import com.example.agro.controllers.dto.FazendaDto;
+import com.example.agro.controllers.dto.FazendaListaDto;
 import com.example.agro.controllers.forms.FazendaForm;
 import com.example.agro.models.Empresa;
 import com.example.agro.models.Fazenda;
@@ -76,5 +77,11 @@ public class FazendaController {
     public int contarPorEmpresa(@PathVariable Long id){
         int quantidade = fazendaService.quantidadeDeFazendas(id);
         return quantidade;
+    }
+
+    @GetMapping("/proxColheita/{id}")
+    public List<FazendaListaDto> listarFazendaDetalhada(@PathVariable Long id){
+        List<Fazenda> fazendas = fazendaService.acharPorEmpresa(id);
+        return FazendaListaDto.converter(fazendas);
     }
 }

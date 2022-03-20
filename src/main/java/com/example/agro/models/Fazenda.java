@@ -8,6 +8,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.LocalDate;
+import java.util.Calendar;
 import java.util.Date;
 
 @Data
@@ -23,7 +24,8 @@ public class Fazenda {
     //regex date
 //    @Pattern(regexp = "^(0[1-9]|[12][0-9]|3[01])/(0[1-9]|1[012])/[0-9]{4}$", message = "Data inválida")
     private String date;
-    private Date dataUltimaColheita;
+    private Calendar dataUltimaColheita = Calendar.getInstance();
+    private Calendar dataProximaColheita = Calendar.getInstance();
 
     @OneToOne
     private Grao grao;
@@ -38,11 +40,11 @@ public class Fazenda {
         this.quilos = quilos;
         this.grao = grao;
         this.empresa = grao.getEmpresa();
-        this.dataUltimaColheita = sdf.parse(date);
+        dataUltimaColheita.setTime(sdf.parse(date));
     }
 
-    public void setDateParse(String date) throws ParseException {
-        this.date = date;
-        this.dataUltimaColheita = sdf.parse(date);
-    }
+//    public void setDateParse(String date) throws ParseException {
+//        this.date = date;
+//        this.dataUltimaColheita = sdf.parse(date);
+//    }
 }

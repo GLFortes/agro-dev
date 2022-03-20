@@ -41,7 +41,7 @@ public class FazendaForm {
         novaFazenda.setEmpresa(empresa);
         novaFazenda.setGrao(grao);
         novaFazenda.setQuilos(quilos);
-        novaFazenda.setDateParse(date);
+        novaFazenda.setDate(date);
         return novaFazenda;
     }
 }
