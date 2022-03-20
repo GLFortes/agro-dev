@@ -12,7 +12,7 @@ public class GraoDto {
     private Long id;
     private String nome;
     private Empresa nomeEmpresa;
-    private Long tempoColeta;
+    private Integer tempoColeta;
 
     public GraoDto(Grao grao){
         this.id = grao.getId();
@@ -23,5 +23,7 @@ public class GraoDto {
 
     public static List<GraoDto> converter(List<Grao> graos){
         return graos.stream().map(GraoDto::new).collect(java.util.stream.Collectors.toList());
-    }}
+    }
+
+}
 

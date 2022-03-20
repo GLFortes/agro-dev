@@ -4,7 +4,6 @@ import com.example.agro.controllers.dto.EmpresaDto;
 import com.example.agro.controllers.forms.EmpresaForm;
 import com.example.agro.models.Empresa;
 import com.example.agro.services.EmpresaService;
-import org.apache.coyote.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -12,7 +11,6 @@ import org.springframework.web.util.UriComponentsBuilder;
 import javax.transaction.Transactional;
 import java.net.URI;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/empresa")
@@ -24,12 +22,14 @@ public class EmpresaController {
         this.service = service;
     }
 
+    //Retorna uma lista de empresas cadastrada no BD
     @GetMapping
     public List<EmpresaDto> listar(){
         List<Empresa> empresas = service.listarEmpresa();
         return EmpresaDto.converter(empresas);
     }
 
+    //Cadastra uma nova empresa no BD
     @PostMapping
     @Transactional
     public ResponseEntity<EmpresaDto> adicionarEmpresa(@RequestBody EmpresaForm form, UriComponentsBuilder uriBuilder){
@@ -40,26 +40,17 @@ public class EmpresaController {
 
     }
 
+    //Atualiza uma empresa no BD
     @PutMapping("/{id}")
-    @Transactional
-    public ResponseEntity<EmpresaDto> atualizaEmpresa(@PathVariable Long id, @RequestBody EmpresaForm form){
-        Optional<Empresa> empresa = service.buscaEmpresa(String.valueOf(id));
-        if(empresa.isPresent()){
-            Empresa empresaAtualizada = service.atualizaEmpresa(id, form.converter());
-            return ResponseEntity.ok(new EmpresaDto(empresaAtualizada));
-        }
-        return ResponseEntity.notFound().build();
-//        return service.atualizaEmpresa(id, form.converter());
+    public ResponseEntity<Empresa> update(@PathVariable Long id, @RequestBody Empresa obj){
+        obj = service.atualizaEmpresa(id, obj);
+        return ResponseEntity.ok(obj);
     }
 
+    //Deleta uma empresa no BD
     @DeleteMapping("/{id}")
-    @Transactional
-    public ResponseEntity<?> deletaEmpresa(@PathVariable Long id){
-        Optional<Empresa> empresa = service.buscaEmpresa(String.valueOf(id));
-        if(empresa.isPresent()){
-            service.deletaEmpresa(id);
-            return ResponseEntity.ok().build();
-        }
-        return ResponseEntity.notFound().build();
+    public ResponseEntity<Void> deletaEmpresa(@PathVariable Long id){
+        service.deletaEmpresa(id);
+        return ResponseEntity.noContent().build();
     }
 }

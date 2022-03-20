@@ -4,6 +4,7 @@ import com.example.agro.models.Grao;
 import com.example.agro.repositories.GraoRepository;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,11 +25,20 @@ public class GraoService {
         return graoRepository.save(grao);
     }
 
-    public Grao atualizaGrao(Long id, Grao grao){
-        Grao graoAtual = graoRepository.findById(id).get();
-        graoAtual.setNome(grao.getNome());
-        graoAtual.setTempoColeta(grao.getTempoColeta());
-        return graoRepository.save(graoAtual);
+    public Grao atualizaGrao(Long id, Grao grao ){
+        try{
+            Grao entity = graoRepository.getOne(id);
+            atualizaDados(entity, grao);
+            return graoRepository.save(entity);
+        }catch(EntityNotFoundException e){
+            throw new EntityNotFoundException("Não foi possível encontrar o grão com o id: " + id);
+        }
+    }
+
+    public void atualizaDados(Grao entity, Grao obj){
+        entity.setNome(obj.getNome());
+        entity.setEmpresa(obj.getEmpresa());
+        entity.setTempoColeta(obj.getTempoColeta());
     }
 
     public void deletaGrao(Long id){
@@ -43,6 +53,9 @@ public class GraoService {
         return (List<Grao>) graoRepository.findByEmpresaId(id);
     }
 
+    public List<Grao> buscarPorGraoOrdenado(Long id) {
+        return graoRepository.findByEmpresaIdOrderByNomeAsc(id);
+    }
 
 }
 

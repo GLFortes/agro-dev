@@ -4,6 +4,7 @@ import com.example.agro.models.Fazenda;
 import com.example.agro.repositories.FazendaRepository;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,6 +23,22 @@ public class FazendaService {
         return fazendaRepository.save(fazenda);
     }
 
+    public Fazenda atualiza(Long id, Fazenda fazenda){
+        try{
+            Fazenda entity = fazendaRepository.getOne(id);
+            atualizaDados(entity, fazenda);
+            return fazendaRepository.save(entity);
+        }catch(EntityNotFoundException e){
+            throw new EntityNotFoundException("Não foi possível encontrar a fazenda com o id: " + id);
+        }
+    }
+
+    public void atualizaDados(Fazenda entity, Fazenda obj){
+        entity.setNome(obj.getNome());
+        entity.setEndereco(obj.getEndereco());
+        entity.setEmpresa(obj.getEmpresa());
+    }
+
     public void deletaFazenda(Long id){
         fazendaRepository.deleteById(id);
     }
@@ -34,17 +51,12 @@ public class FazendaService {
         return (List<Fazenda>) fazendaRepository.findByEmpresaId(id);
     }
 
-    public Fazenda adicionaGrao(Long id, Double quilosAcrescimo){
-        Fazenda fazendaAtualizada = fazendaRepository.findById(id).get();
-        Double quantidade = fazendaAtualizada.getQuilos();
-        quantidade += quilosAcrescimo;
-        fazendaAtualizada.setQuilos(quantidade);
-        return fazendaRepository.save(fazendaAtualizada);
-    }
 
     public int quantidadeDeFazendas(Long id){
         return fazendaRepository.countByEmpresaId(id);
     }
+
+
 
 }
 

@@ -1,17 +1,10 @@
 package com.example.agro.controllers;
 
-import com.example.agro.controllers.dto.EmpresaDto;
-import com.example.agro.controllers.dto.FazendaDto;
 import com.example.agro.controllers.dto.FuncionarioDto;
-import com.example.agro.controllers.forms.EmpresaForm;
-import com.example.agro.controllers.forms.FazendaForm;
 import com.example.agro.controllers.forms.FuncionarioForm;
-import com.example.agro.models.Empresa;
-import com.example.agro.models.Fazenda;
 import com.example.agro.models.Funcionario;
-import com.example.agro.repositories.EmpresaRepository;
+import com.example.agro.services.EmpresaService;
 import com.example.agro.services.FuncionarioService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -19,18 +12,13 @@ import org.springframework.web.util.UriComponentsBuilder;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 import java.net.URI;
-import java.text.ParseException;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/funcionario")
 public class FuncionarioController {
 
     private FuncionarioService service;
-
-    @Autowired
-    private EmpresaRepository empresaRepository;
 
     public FuncionarioController(FuncionarioService service) {
         this.service = service;
@@ -48,6 +36,7 @@ public class FuncionarioController {
 //        return service.cadastrarFuncionario(form.converter());
 //    }
 
+    //Cadatastra um novo funcionário
     @PostMapping
     @Transactional
     public ResponseEntity<FuncionarioDto> cadastrar(@RequestBody @Valid FuncionarioForm form, UriComponentsBuilder uriBuilder){
@@ -56,25 +45,31 @@ public class FuncionarioController {
         return ResponseEntity.created(uri).body(new FuncionarioDto(novoFuncionario));
     }
 
-//    @PutMapping("/{id}")
+    //Atualiza Funcionário
+    @PutMapping("/{id}")
+    public ResponseEntity<Funcionario> update(@PathVariable Long id, @RequestBody Funcionario obj){
+        obj = service.atualizaFuncionario(id, obj);
+        return ResponseEntity.ok(obj);
+    }
+//    public Funcionario atualizaFuncionario(@PathVariable Long id, @RequestBody FuncionarioForm form) throws ParseException {
+//        return service.atualizaFuncionario(id, form.convert(empresaService));
+//    }
 
+    //Deleta um funcionário pelo seu ID
     @DeleteMapping("/{id}")
-    @Transactional
-    public ResponseEntity<?> removerFuncionario(@PathVariable Long id){
-        Optional<Funcionario> funcionario = service.buscarPorId(id);
-        if (funcionario.isPresent()){
-            service.deletar(id);
-            return ResponseEntity.ok().build();
-        }
-        return ResponseEntity.notFound().build();
+    public ResponseEntity<Void> deletaFuncionario(@PathVariable Long id){
+        service.deletar(id);
+        return ResponseEntity.noContent().build();
     }
 
+    //Retorna uma lista de funcionários de uma determinada empresa(a busca é feita pelo ID da empresa)
     @GetMapping("/funcionarioEmpresa/{id}")
     public List<FuncionarioDto> listarPorEmpresa(@PathVariable Long id){
         List<Funcionario> funcionarios = service.acharPorEmpresa(id);
         return FuncionarioDto.converter(funcionarios);
     }
 
+    //Retorna a quantidade de funcionários alocados em uma empresa(a busca é feita pelo ID da empresa)
     @GetMapping("/contarPorEmpresa/{id}")
     public int contarPorEmpresa(@PathVariable Long id){
         int quantidade = service.quantidadeDeFuncionarios(id);
