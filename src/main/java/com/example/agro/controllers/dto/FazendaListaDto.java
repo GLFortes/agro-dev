@@ -4,8 +4,6 @@ import com.example.agro.models.Fazenda;
 import com.example.agro.models.Grao;
 
 import java.time.LocalDate;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 public class FazendaListaDto {
@@ -25,7 +23,7 @@ public class FazendaListaDto {
         this.nome = fazenda.getNome();
         this.tempo = fazenda.getGrao().getTempoColeta();
         this.dataUltimaColheita = fazenda.getDataUltimaColheita();
-//        fazenda.getDataUltimaColheita().add(Calendar.DATE, Math.toIntExact(fazenda.getGrao().getTempoColeta()));
+//      fazenda.getDataUltimaColheita().add(Calendar.DATE, Math.toIntExact(fazenda.getGrao().getTempoColeta()));
         this.dataProxColheita = fazenda.getDataUltimaColheita().plusDays(fazenda.getGrao().getTempoColeta());
 
 

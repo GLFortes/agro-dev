@@ -1,11 +1,10 @@
 package com.example.agro.services;
 
-import com.example.agro.models.Empresa;
 import com.example.agro.models.Fazenda;
 import com.example.agro.repositories.FazendaRepository;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,14 +23,20 @@ public class FazendaService {
         return fazendaRepository.save(fazenda);
     }
 
-    public Fazenda atualizaFazenda(Long id, Fazenda fazenda){
-        Fazenda empresaAtualizada = fazendaRepository.findById(id).get();
-        empresaAtualizada.setNome(fazenda.getNome());
-        empresaAtualizada.setEndereco(fazenda.getEndereco());
-        empresaAtualizada.setQuilos(fazenda.getQuilos());
-        empresaAtualizada.setDate(fazenda.getDate());
-        empresaAtualizada.setGrao(fazenda.getGrao());
-        return fazendaRepository.save(empresaAtualizada);
+    public Fazenda atualiza(Long id, Fazenda fazenda){
+        try{
+            Fazenda entity = fazendaRepository.getOne(id);
+            atualizaDados(entity, fazenda);
+            return fazendaRepository.save(entity);
+        }catch(EntityNotFoundException e){
+            throw new EntityNotFoundException("Não foi possível encontrar a fazenda com o id: " + id);
+        }
+    }
+
+    public void atualizaDados(Fazenda entity, Fazenda obj){
+        entity.setNome(obj.getNome());
+        entity.setEndereco(obj.getEndereco());
+        entity.setEmpresa(obj.getEmpresa());
     }
 
     public void deletaFazenda(Long id){
@@ -46,25 +51,12 @@ public class FazendaService {
         return (List<Fazenda>) fazendaRepository.findByEmpresaId(id);
     }
 
-//    public Fazenda adicionaGrao(Long id, Double quilosAcrescimo){
-//        Fazenda fazendaAtualizada = fazendaRepository.findById(id).get();
-//        Double quantidade = fazendaAtualizada.getQuilos();
-//        quantidade += quilosAcrescimo;
-//        fazendaAtualizada.setQuilos(quantidade);
-//        return fazendaRepository.save(fazendaAtualizada);
-//    }
 
     public int quantidadeDeFazendas(Long id){
         return fazendaRepository.countByEmpresaId(id);
     }
 
-//    public List<Fazenda> buscarProximaColheita(Long id){
-//        return fazendaRepository.findByEmpresaIdAndDateBefore(id, LocalDate.now());
-//    }
 
-    public List<Fazenda> ordenarPorQuantidade(Long id){
-        return (List<Fazenda>) fazendaRepository.findByEmpresaIdOrderByQuantidadeGraosDesc(id);
-    }
 
 }
 

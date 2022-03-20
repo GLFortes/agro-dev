@@ -14,7 +14,6 @@ public class Grao {
     private Integer tempoColeta;
 
     @ManyToOne
-//    @JoinColumn(name = "id_tipo_grao")
     private Empresa empresa;
 
     public Grao(){}

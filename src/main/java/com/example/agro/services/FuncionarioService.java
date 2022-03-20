@@ -1,10 +1,10 @@
 package com.example.agro.services;
 
 import com.example.agro.models.Funcionario;
-import com.example.agro.models.Grao;
 import com.example.agro.repositories.FuncionarioRepository;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,17 +24,25 @@ public class FuncionarioService {
         return funcionarioRepository.save(funcionario);
     }
 
-    public Funcionario atualizaFuncionario(Funcionario funcionario){
-        Funcionario funcionarioAtualizado = funcionarioRepository.findById(funcionario.getId()).get();
-        funcionarioAtualizado.setNome(funcionario.getNome());
-        funcionarioAtualizado.setSobrenome(funcionario.getSobrenome());
-        funcionarioAtualizado.setCpf(funcionario.getCpf());
-        funcionarioAtualizado.setDataNascimento(funcionario.getDataNascimento());
-        funcionarioAtualizado.setEndereco(funcionario.getEndereco());
-        funcionarioAtualizado.setTelefone(funcionario.getTelefone());
-        funcionarioAtualizado.setSexo(funcionario.getSexo());
-        funcionarioAtualizado.setAdmissao(funcionario.getAdmissao());
-        return funcionarioRepository.save(funcionarioAtualizado);
+    public Funcionario atualizaFuncionario(Long id, Funcionario funcionario){
+        try{
+            Funcionario entity = funcionarioRepository.getOne(id);
+            atualizaDados(entity, funcionario);
+            return funcionarioRepository.save(entity);
+        }catch(EntityNotFoundException e){
+            throw new EntityNotFoundException("Não foi possível encontrar o funcionário com o id: " + id);
+
+        }
+    }
+    public void atualizaDados(Funcionario entity, Funcionario obj){
+        entity.setNome(obj.getNome());
+        entity.setSobrenome(obj.getSobrenome());
+        entity.setCpf(obj.getCpf());
+        entity.setDataNascimento(obj.getDataNascimento());
+        entity.setEndereco(obj.getEndereco());
+        entity.setTelefone(obj.getTelefone());
+        entity.setSexo(obj.getSexo());
+        entity.setAdmissao(obj.getAdmissao());
     }
 
     public void deletar(Long id){

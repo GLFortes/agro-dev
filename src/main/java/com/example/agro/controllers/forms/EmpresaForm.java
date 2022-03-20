@@ -1,7 +1,6 @@
 package com.example.agro.controllers.forms;
 
 import com.example.agro.models.Empresa;
-import com.example.agro.repositories.EmpresaRepository;
 import lombok.Data;
 
 import javax.validation.constraints.NotEmpty;

@@ -31,14 +31,6 @@ public class FuncionarioDto {
         this.empresa = funcionario.getEmpresa();
     }
 
-//    public FuncionarioDto(Funcionario funcionario){
-//        this.id=funcionario.getId();
-//        this.nome=funcionario.getNome();
-//        this.sobrenome=funcionario.getSobrenome();
-//        this.cpf=funcionario.getCpf();
-//
-//    }
-
     public static List<FuncionarioDto> converter(List<Funcionario> funcionarios){
         return funcionarios.stream().map(FuncionarioDto::new).collect(java.util.stream.Collectors.toList());
     }

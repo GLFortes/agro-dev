@@ -1,12 +1,9 @@
 package com.example.agro.controllers;
 
-import com.example.agro.controllers.dto.EmpresaDto;
 import com.example.agro.controllers.dto.FazendaDto;
 import com.example.agro.controllers.dto.FazendaListaDto;
 import com.example.agro.controllers.forms.FazendaForm;
-import com.example.agro.models.Empresa;
 import com.example.agro.models.Fazenda;
-import com.example.agro.repositories.FazendaRepository;
 import com.example.agro.repositories.GraoRepository;
 import com.example.agro.services.FazendaService;
 import org.springframework.http.ResponseEntity;
@@ -46,16 +43,18 @@ public class FazendaController {
         return ResponseEntity.created(uri).body(new FazendaDto(fazenda));
     }
 
+    //Atualiza fazenda
+    @PutMapping("/{id}")
+    public ResponseEntity<Fazenda> update(@PathVariable Long id, @RequestBody Fazenda obj){
+        obj = fazendaService.atualiza(id, obj);
+        return ResponseEntity.ok(obj);
+    }
+
     //Deleta uma fazenda por ID
     @DeleteMapping("/{id}")
-    @Transactional
-    public ResponseEntity<?> deletar(@PathVariable Long id){
-        Optional<Fazenda> fazenda = fazendaService.buscarPorId(id);
-        if(fazenda.isPresent()){
-            fazendaService.deletaFazenda(id);
-            return ResponseEntity.ok().build();
-        }
-        return ResponseEntity.notFound().build();
+    public ResponseEntity<Void> deletaFazenda(@PathVariable Long id){
+        fazendaService.deletaFazenda(id);
+        return ResponseEntity.noContent().build();
     }
 
     //Retorna uma lista de fazenda de acordo com o ID da empresa
@@ -75,7 +74,7 @@ public class FazendaController {
 
     //Registrar uma colheita
     @PutMapping("/aumentar/{id}")
-    public ResponseEntity<FazendaDto> aumentarGraos(@PathVariable Long id, @RequestParam double quantidade) throws ParseException {
+    public ResponseEntity<FazendaDto> aumentarGraos(@PathVariable Long id, @RequestParam double quantidade) {
         Optional<Fazenda> optional = fazendaService.buscarPorId(id);
         if(optional.isPresent()){
             FazendaDto fazendaDto = optional.map(FazendaDto::new).get();
