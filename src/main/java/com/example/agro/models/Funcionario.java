@@ -22,8 +22,8 @@ public class Funcionario {
     private String cpf;
     private String endereco;
 
-    //validar telefone (xx)xxxx-xxxx (não consegui implementar, sempre retornava um erro 500. Devo ter tido problemas de sintaxe)
-
+    //valida formato de entrada do telefone
+    @Pattern(regexp = "^\\([0-9]{2}\\)[0-9]{9}$", message = "Telefone inválido")
     private String telefone;
     private String sexo;
     private String dataNascimento;

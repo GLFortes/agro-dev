@@ -34,20 +34,20 @@ public class GraoController {
     //Cadastra um grão novo ao BD
     @PostMapping
     @Transactional
-    public Grao adicionaGrao(@RequestBody GraoForm form){
+    public Grao adicionarGrao(@RequestBody GraoForm form){
         return service.adicionaGrao(form.converter());
     }
 
     @PutMapping("/{id}")
     @Transactional
-    public ResponseEntity<Grao> update(@PathVariable Long id, @RequestBody Grao obj){
+    public ResponseEntity<Grao> atualizarGrao(@PathVariable Long id, @RequestBody Grao obj){
     obj = service.atualizaGrao(id, obj);
     return ResponseEntity.ok(obj);
 }
 
     //Deleta um grão pelo ID
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletaGrao(@PathVariable Long id){
+    public ResponseEntity<Void> deletarGrao(@PathVariable Long id){
         service.deletaGrao(id);
         return ResponseEntity.noContent().build();
     }

@@ -7,6 +7,7 @@ import lombok.Data;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import java.text.ParseException;
 
 @Data
@@ -17,13 +18,16 @@ public class FuncionarioForm {
     private String nome;
     @NotNull @NotEmpty
     private String sobrenome;
-//    @Pattern(regexp = "^\\d{2}\\.\\d{3}\\.\\d{3}\\/\\d{4}\\-\\d{2}$", message = "cpf inválido")
+    //valida cpf
+    @Pattern(regexp = "^[0-9]{3}\\.[0-9]{3}\\.[0-9]{3}\\-[0-9]{2}$", message = "CPF inválido")
     @NotNull @NotEmpty
     private String cpf;
     @NotNull
-    private String empresa;
+    private Empresa empresa;
     @NotNull @NotEmpty
     private String endereco;
+    //valida telefone
+    @Pattern(regexp = "^\\([0-9]{2}\\)[0-9]{9}$", message = "Telefone inválido")
     @NotNull @NotEmpty
     private String telefone;
     @NotNull @NotEmpty
@@ -39,7 +43,7 @@ public class FuncionarioForm {
         novoFuncionario.setNome(this.nome);
         novoFuncionario.setSobrenome(this.sobrenome);
         novoFuncionario.setCpf(this.cpf);
-//        novoFuncionario.setEmpresa(this.empresa);
+        novoFuncionario.setEmpresa(this.empresa);
         novoFuncionario.setEndereco(this.endereco);
         novoFuncionario.setTelefone(this.telefone);
         novoFuncionario.setSexo(this.sexo);
@@ -50,7 +54,7 @@ public class FuncionarioForm {
     }
 
     public Funcionario convert(EmpresaService empresaService) throws ParseException {
-        Empresa empresa = empresaService.findByNome(this.empresa);
+        Empresa empresa = empresaService.findByNome(String.valueOf(this.empresa));
         return new Funcionario(nome, sobrenome, cpf, endereco, telefone, sexo, dataNascimento, admissao, empresa);
     }
 }
