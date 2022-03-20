@@ -24,7 +24,7 @@ public class FuncionarioForm {
 //    @Pattern(regexp = "^\\d{2}\\.\\d{3}\\.\\d{3}\\/\\d{4}\\-\\d{2}$", message = "cpf inválido")
     @NotNull @NotEmpty
     private String cpf;
-    @NotNull @NotEmpty
+    @NotNull
     private Empresa empresa;
     @NotNull @NotEmpty
     private String endereco;
