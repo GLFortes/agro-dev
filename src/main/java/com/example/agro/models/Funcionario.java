@@ -1,5 +1,6 @@
 package com.example.agro.models;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -17,8 +18,10 @@ public class Funcionario {
     private String endereco;
     private String telefone;
     private String sexo;
-    private Date dataNascimento;
-    private Date admissao;
+//    @JsonFormat(pattern="dd/MM/yyyy")
+    private String dataNascimento;
+//    @JsonFormat(pattern="dd/MM/yyyy")
+    private String admissao;
 
     @OneToOne
     private Empresa empresa;
@@ -26,7 +29,7 @@ public class Funcionario {
     public Funcionario() {
     }
 
-    public Funcionario(String nome, String sobrenome, String cpf, String endereco, String telefone, String sexo, Date dataNascimento, Date admissao, Empresa empresa) {
+    public Funcionario(String nome, String sobrenome, String cpf, String endereco, String telefone, String sexo, String dataNascimento, String admissao, Empresa empresa) {
         this.nome = nome;
         this.sobrenome = sobrenome;
         this.cpf = cpf;
@@ -37,4 +40,5 @@ public class Funcionario {
         this.admissao = admissao;
         this.empresa = empresa;
     }
+
 }
