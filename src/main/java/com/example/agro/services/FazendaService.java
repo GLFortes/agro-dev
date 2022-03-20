@@ -31,7 +31,7 @@ public class FazendaService {
     }
 
     public List<Fazenda> acharPorEmpresa(Long id){
-        return (List<Fazenda>) fazendaRepository.findByEmpresa(id);
+        return (List<Fazenda>) fazendaRepository.findByEmpresaId(id);
     }
 
     public Fazenda adicionaGrao(Long id, Double quilosAcrescimo){
@@ -40,6 +40,10 @@ public class FazendaService {
         quantidade += quilosAcrescimo;
         fazendaAtualizada.setQuilos(quantidade);
         return fazendaRepository.save(fazendaAtualizada);
+    }
+
+    public int quantidadeDeFazendas(Long id){
+        return fazendaRepository.countByEmpresaId(id);
     }
 }
 

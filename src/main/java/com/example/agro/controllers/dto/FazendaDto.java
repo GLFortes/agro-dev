@@ -6,16 +6,17 @@ import com.example.agro.models.Grao;
 import com.example.agro.services.FazendaService;
 import lombok.Getter;
 
+import java.util.Date;
 import java.util.List;
 
 @Getter
 public class FazendaDto {
-    private FazendaService service;
 
     private Long id;
     private String nome;
     private String endereco;
     private Double quilos;
+    String dataUltimaColheita;
     private Empresa empresa;
     private Grao grao;
 
@@ -24,6 +25,7 @@ public class FazendaDto {
         this.nome = fazenda.getNome();
         this.endereco = fazenda.getEndereco();
         this.quilos = fazenda.getQuilos();
+        this.dataUltimaColheita = fazenda.getDate();
         this.empresa = fazenda.getEmpresa();
         this.grao = fazenda.getGrao();
     }
@@ -32,7 +34,7 @@ public class FazendaDto {
         return fazendas.stream().map(FazendaDto::new).collect(java.util.stream.Collectors.toList());
     }
 
-    public Fazenda aumentaQuantidade(Long id, Double acrescimo){
+    public Fazenda aumentaQuantidade(Long id, Double acrescimo, FazendaService service) {
         Fazenda fazenda = service.buscarPorId(id).get();
         Double quantidade = fazenda.getQuilos();
         quantidade += acrescimo;

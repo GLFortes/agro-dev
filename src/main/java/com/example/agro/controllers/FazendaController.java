@@ -15,6 +15,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 import java.net.URI;
+import java.text.ParseException;
 import java.util.List;
 import java.util.Optional;
 
@@ -36,7 +37,7 @@ public class FazendaController {
 
     @PostMapping
     @Transactional
-    public ResponseEntity<FazendaDto> cadastrar(@RequestBody @Valid FazendaForm form, UriComponentsBuilder uriBuilder){
+    public ResponseEntity<FazendaDto> cadastrar(@RequestBody @Valid FazendaForm form, UriComponentsBuilder uriBuilder) throws ParseException {
         Fazenda fazenda = fazendaService.adicionarFazenda(form.converter());
         URI uri = UriComponentsBuilder.fromPath("/fazenda/{id}").buildAndExpand(fazenda.getId()).toUri();
         return ResponseEntity.created(uri).body(new FazendaDto(fazenda));
@@ -64,10 +65,16 @@ public class FazendaController {
     public ResponseEntity<FazendaDto> aumentarGraos(@PathVariable Long id, @RequestBody FazendaDto fazendaDto, Double quantidade){
         Optional<Fazenda> optional = fazendaService.buscarPorId(id);
         if(optional.isPresent()){
-            Fazenda fazenda = fazendaDto.aumentaQuantidade(id, quantidade);
+            Fazenda fazenda = fazendaDto.aumentaQuantidade(id, quantidade, fazendaService);
             return ResponseEntity.ok(new FazendaDto(fazenda));
         }
         return ResponseEntity.notFound().build();
 
+    }
+
+    @GetMapping("/contarPorEmpresa/{id}")
+    public int contarPorEmpresa(@PathVariable Long id){
+        int quantidade = fazendaService.quantidadeDeFazendas(id);
+        return quantidade;
     }
 }

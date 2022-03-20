@@ -9,5 +9,9 @@ import org.springframework.stereotype.Repository;
 public interface FazendaRepository extends JpaRepository<Fazenda, Long> {
     //localizar fazenda por empresa
     @Query("select f from Fazenda f where f.empresa.id = ?1")
-    Iterable<Fazenda> findByEmpresa(Long id);
+    Iterable<Fazenda> findByEmpresaId(Long id);
+
+    //Contar fazenda por empresa
+    @Query("select count(f) from Fazenda f where f.empresa.id = ?1")
+    int countByEmpresaId(Long id);
 }
