@@ -1,8 +1,10 @@
 package com.example.agro.controllers;
 
+import com.example.agro.controllers.dto.EmpresaDto;
 import com.example.agro.controllers.dto.FazendaDto;
 import com.example.agro.controllers.dto.FazendaListaDto;
 import com.example.agro.controllers.forms.FazendaForm;
+import com.example.agro.models.Empresa;
 import com.example.agro.models.Fazenda;
 import com.example.agro.repositories.GraoRepository;
 import com.example.agro.services.FazendaService;
@@ -37,7 +39,7 @@ public class FazendaController {
     //Cadastra uma nova fazenda
     @PostMapping
     @Transactional
-    public ResponseEntity<FazendaDto> cadastrar(@RequestBody @Valid FazendaForm form, UriComponentsBuilder uriBuilder) throws ParseException {
+    public ResponseEntity<FazendaDto> cadastrarFazenda(@RequestBody @Valid FazendaForm form, UriComponentsBuilder uriBuilder) throws ParseException {
         Fazenda fazenda = fazendaService.adicionarFazenda(form.converter());
         URI uri = UriComponentsBuilder.fromPath("/fazenda/{id}").buildAndExpand(fazenda.getId()).toUri();
         return ResponseEntity.created(uri).body(new FazendaDto(fazenda));
@@ -45,14 +47,14 @@ public class FazendaController {
 
     //Atualiza fazenda
     @PutMapping("/{id}")
-    public ResponseEntity<Fazenda> update(@PathVariable Long id, @RequestBody Fazenda obj){
+    public ResponseEntity<Fazenda> atualizarFazenda(@PathVariable Long id, @RequestBody Fazenda obj){
         obj = fazendaService.atualiza(id, obj);
         return ResponseEntity.ok(obj);
     }
 
     //Deleta uma fazenda por ID
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletaFazenda(@PathVariable Long id){
+    public ResponseEntity<Void> deletarFazenda(@PathVariable Long id){
         fazendaService.deletaFazenda(id);
         return ResponseEntity.noContent().build();
     }
@@ -99,12 +101,13 @@ public class FazendaController {
         return ResponseEntity.notFound().build();
     }
 
-//
+    //faz um count de quantas fazendas são cadastradas por empresa
     @GetMapping("/contarPorEmpresa/{id}")
     public int contarPorEmpresa(@PathVariable Long id){
         int quantidade = fazendaService.quantidadeDeFazendas(id);
         return quantidade;
     }
+
 
 //    @GetMapping("/ordenarQuantidade/{id}")
 //        public List<FazendaDto> ordenarPorQuantidade(@PathVariable Long id){

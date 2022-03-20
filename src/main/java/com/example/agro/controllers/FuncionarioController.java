@@ -39,7 +39,7 @@ public class FuncionarioController {
     //Cadatastra um novo funcionário
     @PostMapping
     @Transactional
-    public ResponseEntity<FuncionarioDto> cadastrar(@RequestBody @Valid FuncionarioForm form, UriComponentsBuilder uriBuilder){
+    public ResponseEntity<FuncionarioDto> cadastrarFuncionario(@RequestBody @Valid FuncionarioForm form, UriComponentsBuilder uriBuilder){
         Funcionario novoFuncionario = service.cadastrarFuncionario(form.converter());
         URI uri = UriComponentsBuilder.fromPath("/funcionario/{id}").buildAndExpand(novoFuncionario.getId()).toUri();
         return ResponseEntity.created(uri).body(new FuncionarioDto(novoFuncionario));
@@ -47,17 +47,14 @@ public class FuncionarioController {
 
     //Atualiza Funcionário
     @PutMapping("/{id}")
-    public ResponseEntity<Funcionario> update(@PathVariable Long id, @RequestBody Funcionario obj){
+    public ResponseEntity<Funcionario> atualizarFuncionario(@PathVariable Long id, @RequestBody Funcionario obj){
         obj = service.atualizaFuncionario(id, obj);
         return ResponseEntity.ok(obj);
     }
-//    public Funcionario atualizaFuncionario(@PathVariable Long id, @RequestBody FuncionarioForm form) throws ParseException {
-//        return service.atualizaFuncionario(id, form.convert(empresaService));
-//    }
 
     //Deleta um funcionário pelo seu ID
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletaFuncionario(@PathVariable Long id){
+    public ResponseEntity<Void> deletarFuncionario(@PathVariable Long id){
         service.deletar(id);
         return ResponseEntity.noContent().build();
     }

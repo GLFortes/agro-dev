@@ -32,7 +32,7 @@ public class EmpresaController {
     //Cadastra uma nova empresa no BD
     @PostMapping
     @Transactional
-    public ResponseEntity<EmpresaDto> adicionarEmpresa(@RequestBody EmpresaForm form, UriComponentsBuilder uriBuilder){
+    public ResponseEntity<EmpresaDto> cadastrarEmpresa(@RequestBody EmpresaForm form, UriComponentsBuilder uriBuilder){
         Empresa empresa = form.converter();
 
         URI uri = uriBuilder.path("/empresa/{id}").buildAndExpand(empresa.getId()).toUri();
@@ -42,15 +42,21 @@ public class EmpresaController {
 
     //Atualiza uma empresa no BD
     @PutMapping("/{id}")
-    public ResponseEntity<Empresa> update(@PathVariable Long id, @RequestBody Empresa obj){
+    public ResponseEntity<Empresa> atualizarEmpresa(@PathVariable Long id, @RequestBody Empresa obj){
         obj = service.atualizaEmpresa(id, obj);
         return ResponseEntity.ok(obj);
     }
 
     //Deleta uma empresa no BD
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletaEmpresa(@PathVariable Long id){
+    public ResponseEntity<Void> deletarEmpresa(@PathVariable Long id){
         service.deletaEmpresa(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<EmpresaDto> buscarEmpresa(@PathVariable Long id){
+        Empresa empresa = service.findById(id);
+        return ResponseEntity.ok(new EmpresaDto(empresa));
     }
 }

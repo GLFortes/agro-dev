@@ -51,7 +51,6 @@ public class FazendaService {
         return (List<Fazenda>) fazendaRepository.findByEmpresaId(id);
     }
 
-
     public int quantidadeDeFazendas(Long id){
         return fazendaRepository.countByEmpresaId(id);
     }
