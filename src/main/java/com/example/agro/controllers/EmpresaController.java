@@ -24,12 +24,14 @@ public class EmpresaController {
         this.service = service;
     }
 
+    //Retorna uma lista de empresas cadastrada no BD
     @GetMapping
     public List<EmpresaDto> listar(){
         List<Empresa> empresas = service.listarEmpresa();
         return EmpresaDto.converter(empresas);
     }
 
+    //Cadastra uma nova empresa no BD
     @PostMapping
     @Transactional
     public ResponseEntity<EmpresaDto> adicionarEmpresa(@RequestBody EmpresaForm form, UriComponentsBuilder uriBuilder){
@@ -40,6 +42,7 @@ public class EmpresaController {
 
     }
 
+    //Atualiza uma empresa no BD
     @PutMapping("/{id}")
     @Transactional
     public ResponseEntity<EmpresaDto> atualizaEmpresa(@PathVariable Long id, @RequestBody EmpresaForm form){
@@ -49,9 +52,9 @@ public class EmpresaController {
             return ResponseEntity.ok(new EmpresaDto(empresaAtualizada));
         }
         return ResponseEntity.notFound().build();
-//        return service.atualizaEmpresa(id, form.converter());
     }
 
+    //Deleta uma empresa no BD
     @DeleteMapping("/{id}")
     @Transactional
     public ResponseEntity<?> deletaEmpresa(@PathVariable Long id){

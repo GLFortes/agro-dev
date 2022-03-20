@@ -29,9 +29,6 @@ public class FuncionarioController {
 
     private FuncionarioService service;
 
-    @Autowired
-    private EmpresaRepository empresaRepository;
-
     public FuncionarioController(FuncionarioService service) {
         this.service = service;
     }
@@ -48,6 +45,7 @@ public class FuncionarioController {
 //        return service.cadastrarFuncionario(form.converter());
 //    }
 
+    //Cadatastra um novo funcionário
     @PostMapping
     @Transactional
     public ResponseEntity<FuncionarioDto> cadastrar(@RequestBody @Valid FuncionarioForm form, UriComponentsBuilder uriBuilder){
@@ -58,6 +56,7 @@ public class FuncionarioController {
 
 //    @PutMapping("/{id}")
 
+    //Deleta um funcionário pelo seu ID
     @DeleteMapping("/{id}")
     @Transactional
     public ResponseEntity<?> removerFuncionario(@PathVariable Long id){
@@ -69,12 +68,14 @@ public class FuncionarioController {
         return ResponseEntity.notFound().build();
     }
 
+    //Retorna uma lista de funcionários de uma determinada empresa(a busca é feita pelo ID da empresa)
     @GetMapping("/funcionarioEmpresa/{id}")
     public List<FuncionarioDto> listarPorEmpresa(@PathVariable Long id){
         List<Funcionario> funcionarios = service.acharPorEmpresa(id);
         return FuncionarioDto.converter(funcionarios);
     }
 
+    //Retorna a quantidade de funcionários alocados em uma empresa(a busca é feita pelo ID da empresa)
     @GetMapping("/contarPorEmpresa/{id}")
     public int contarPorEmpresa(@PathVariable Long id){
         int quantidade = service.quantidadeDeFuncionarios(id);

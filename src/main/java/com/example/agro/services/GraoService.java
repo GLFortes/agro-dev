@@ -47,8 +47,8 @@ public class GraoService {
         return graoRepository.findByEmpresaIdOrderByNomeAsc(id);
     }
 
-    public List<Object[]> ordernarPorQuantidade(Long id){
-        return graoRepository.findByEmpresaIdOrderByFazendaQuantidade(id);
-    }
+//    public List<Object[]> ordernarPorQuantidade(Long id){
+//        return graoRepository.findByEmpresaIdOrderByFazendaQuantidade(id);
+//    }
 }
 

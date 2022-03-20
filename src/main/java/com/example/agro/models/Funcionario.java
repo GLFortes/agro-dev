@@ -24,14 +24,13 @@ public class Funcionario {
     @Pattern(regexp = "^[0-9]{3}\\.[0-9]{3}\\.[0-9]{3}\\-[0-9]{2}$", message = "CPF inválido")
     private String cpf;
     private String endereco;
-    //validar telefone (xx)xxxx-xxxx
+
+    //validar telefone (xx)xxxx-xxxx (não consegui implementar, sempre retornava um erro 500. Devo ter tido problemas de sintaxe)
 
     private String telefone;
     private String sexo;
-//    @JsonFormat(pattern="dd/MM/yyyy")
     private String dataNascimento;
     private Calendar nascimentoCalendar = Calendar.getInstance();
-//    @JsonFormat(pattern="dd/MM/yyyy")
     private String admissao;
     private Calendar admissaoCalendar = Calendar.getInstance();
 

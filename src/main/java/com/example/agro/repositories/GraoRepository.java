@@ -9,11 +9,11 @@ import java.util.List;
 
 @Repository
 public interface GraoRepository extends JpaRepository<Grao, Long> {
-    //Localizar grao por empresa
+    //Localizar grao por ID de empresa
     Iterable<Grao> findByEmpresaId(Long id);
 
-    //ordenar por quantidade de grãos
-    @Query(value = "SELECT grao_nome, fazenda_quantidade FROM grao INNER JOIN fazenda ON grao.fazenda_id = fazenda.id WHERE fazenda.empresa_id = ?1 ORDER BY fazenda_quantidade DESC", nativeQuery = true)
-    List<Object[]> findByEmpresaIdOrderByFazendaQuantidade(Long id);
+
+
+    //Ordenar Grãos por ordem alfabética
     List<Grao> findByEmpresaIdOrderByNomeAsc(Long id);
 }

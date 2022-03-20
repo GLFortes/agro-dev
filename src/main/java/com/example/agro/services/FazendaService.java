@@ -58,6 +58,14 @@ public class FazendaService {
         return fazendaRepository.countByEmpresaId(id);
     }
 
+//    public List<Fazenda> buscarProximaColheita(Long id){
+//        return fazendaRepository.findByEmpresaIdAndDateBefore(id, LocalDate.now());
+//    }
+
+    public List<Fazenda> ordenarPorQuantidade(Long id){
+        return (List<Fazenda>) fazendaRepository.findByEmpresaIdOrderByQuantidadeGraosDesc(id);
+    }
+
 }
 
 

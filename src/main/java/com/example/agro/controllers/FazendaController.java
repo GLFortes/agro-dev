@@ -30,12 +30,14 @@ public class FazendaController {
         this.fazendaService = fazendaService;
     }
 
+    //Lista todas as fazendas cadastradas no BD
     @GetMapping
     public List<FazendaDto> listar(){
         List<Fazenda> fazendas = fazendaService.listar();
         return FazendaDto.converter(fazendas);
     }
 
+    //Cadastra uma nova fazenda
     @PostMapping
     @Transactional
     public ResponseEntity<FazendaDto> cadastrar(@RequestBody @Valid FazendaForm form, UriComponentsBuilder uriBuilder) throws ParseException {
@@ -44,6 +46,7 @@ public class FazendaController {
         return ResponseEntity.created(uri).body(new FazendaDto(fazenda));
     }
 
+    //Deleta uma fazenda por ID
     @DeleteMapping("/{id}")
     @Transactional
     public ResponseEntity<?> deletar(@PathVariable Long id){
@@ -55,20 +58,22 @@ public class FazendaController {
         return ResponseEntity.notFound().build();
     }
 
+    //Retorna uma lista de fazenda de acordo com o ID da empresa
     @GetMapping("/{id}")
     public List<FazendaDto> fazendasPorEmpresa(@PathVariable Long id){
         List<Fazenda> fazendas = fazendaService.acharPorEmpresa(id);
         return FazendaDto.converter(fazendas);
     }
 
+    //Retorna uma lista de fazendas de acordo com o ID da empresa, mostrando apenas o nome da fazenda, seu ID e data da proxima colheita (ainda não funcional)
     @GetMapping("/fazendasDetalhes/{id}")
-    public List<FazendaListaDto> listarFazendaDetalhadaa(@PathVariable Long id){
+    public List<FazendaListaDto> listarFazendaDetalhada(@PathVariable Long id){
         List<Fazenda> fazendas = fazendaService.acharPorEmpresa(id);
         return FazendaListaDto.converter(fazendas);
     }
 
 
-    //registrar uma colheita
+    //Registrar uma colheita
     @PutMapping("/aumentar/{id}")
     public ResponseEntity<FazendaDto> aumentarGraos(@PathVariable Long id, @RequestParam double quantidade) throws ParseException {
         Optional<Fazenda> optional = fazendaService.buscarPorId(id);
@@ -82,6 +87,7 @@ public class FazendaController {
 
     }
 
+    //Subtrai uma quantidade enviada por parâmetro do estoque de grãos da fazenda (a busca é feita pelo ID
     @PutMapping("/diminuir/{id}")
     public ResponseEntity<FazendaDto> diminuirGraos(@PathVariable Long id, @RequestParam double quantidade){
         Optional<Fazenda> optional = fazendaService.buscarPorId(id);
@@ -94,27 +100,17 @@ public class FazendaController {
         return ResponseEntity.notFound().build();
     }
 
-//    @PutMapping("/registrarColheita/{id}")
-//    public ResponseEntity<FazendaDto> registrarColheita(@PathVariable Long id, @RequestParam double quantidade){
-//        Optional<Fazenda> optional = fazendaService.buscarPorId(id);
-//        if(optional.isPresent()){
-//            FazendaDto fazendaDto = optional.map(FazendaDto::new).get();
-//            Fazenda fazenda = fazendaDto.registraColheita(id, quantidade, fazendaService);
-//            fazendaService.adicionarFazenda(fazenda);
-//            return ResponseEntity.ok(new FazendaDto(fazenda));
-//        }
-//        return ResponseEntity.notFound().build();
-//    }
+//
     @GetMapping("/contarPorEmpresa/{id}")
     public int contarPorEmpresa(@PathVariable Long id){
         int quantidade = fazendaService.quantidadeDeFazendas(id);
         return quantidade;
     }
 
+//    @GetMapping("/ordenarQuantidade/{id}")
+//        public List<FazendaDto> ordenarPorQuantidade(@PathVariable Long id){
+//            List<Fazenda> fazendas = fazendaService.ordenarPorQuantidade(id);
+//            return FazendaDto.converter(fazendas);
+//        }
 
-    @GetMapping("/proxColheita/{id}")
-    public List<FazendaListaDto> listarFazendaDetalhada(@PathVariable Long id){
-        List<Fazenda> fazendas = fazendaService.acharPorEmpresa(id);
-        return FazendaListaDto.converter(fazendas);
-    }
 }

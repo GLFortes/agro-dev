@@ -20,13 +20,14 @@ public class FazendaListaDto {
     Grao grao;
     
     public FazendaListaDto(Fazenda fazenda) {
+        this.grao = fazenda.getGrao();
         this.id = fazenda.getId();
         this.nome = fazenda.getNome();
         this.tempo = fazenda.getGrao().getTempoColeta();
         this.dataUltimaColheita = fazenda.getDataUltimaColheita();
 //        fazenda.getDataUltimaColheita().add(Calendar.DATE, Math.toIntExact(fazenda.getGrao().getTempoColeta()));
         this.dataProxColheita = fazenda.getDataUltimaColheita().plusDays(fazenda.getGrao().getTempoColeta());
-        this.grao = fazenda.getGrao();
+
 
 //        this.dataProximaColheita = dataUltimaColheita;
 //        dataProximaColheita.add(Calendar.DATE, grao.getTempoColeta());

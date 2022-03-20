@@ -33,6 +33,7 @@ public class GraoController {
         this.service = service;
     }
 
+    //Retorna todos os graos cadastrados no BD
     @GetMapping
     public List<GraoDto> listar(){
         List<Grao> graos = service.listaGraos();
@@ -48,6 +49,7 @@ public class GraoController {
 //        return ResponseEntity.created(uri).body(new GraoDto(grao));
 //    }
 
+    //Cadastra um grão novo ao BD
     @PostMapping
     @Transactional
     public Grao adicionaGrao(@RequestBody GraoForm form){
@@ -73,6 +75,7 @@ public class GraoController {
 //        return ResponseEntity.notFound().build();
 //    }
 
+    //Deleta um grão pelo ID
     @DeleteMapping("/{id}")
     @Transactional
     public ResponseEntity<?> remover(@PathVariable Long id){
@@ -84,12 +87,14 @@ public class GraoController {
         return ResponseEntity.notFound().build();
     }
 
+    //Retorna os grãos de uma determinada empresa(a busca é feita pelo ID da empresa)
     @GetMapping("/empresa/{id}")
     public List<GraoDto> listarPorEmpresa(@PathVariable Long id){
         List<Grao> graos = service.buscarPorEmpresa(id);
         return GraoDto.converter(graos);
     }
 
+    //Retorna uma lista de grãos ordenados pelo nome (não consegui implementar a contagem por quantidades)
     @GetMapping("/buscarOrdenado/{id}")
     public List<GraoDto> listarPorGraoOrdenado(@PathVariable Long id){
         List<Grao> graos = service.buscarPorGraoOrdenado(id);
