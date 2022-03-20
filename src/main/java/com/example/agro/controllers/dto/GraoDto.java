@@ -5,6 +5,8 @@ import com.example.agro.models.Grao;
 import lombok.Getter;
 
 import java.util.List;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 @Getter
 public class GraoDto {
@@ -12,7 +14,7 @@ public class GraoDto {
     private Long id;
     private String nome;
     private Empresa nomeEmpresa;
-    private Long tempoColeta;
+    private Integer tempoColeta;
 
     public GraoDto(Grao grao){
         this.id = grao.getId();
@@ -23,5 +25,7 @@ public class GraoDto {
 
     public static List<GraoDto> converter(List<Grao> graos){
         return graos.stream().map(GraoDto::new).collect(java.util.stream.Collectors.toList());
-    }}
+    }
+
+}
 

@@ -3,6 +3,7 @@ package com.example.agro.controllers.dto;
 import com.example.agro.models.Fazenda;
 import com.example.agro.models.Grao;
 
+import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -11,9 +12,11 @@ public class FazendaListaDto {
     
     Long id;
     String nome;
-    Long tempo;
-    Calendar dataUltimaColheita;
-    Calendar dataProxColheita;
+    Integer tempo;
+//    Calendar dataUltimaColheita;
+//    Calendar dataProxColheita;
+    LocalDate dataUltimaColheita;
+    LocalDate dataProxColheita;
     Grao grao;
     
     public FazendaListaDto(Fazenda fazenda) {
@@ -21,7 +24,8 @@ public class FazendaListaDto {
         this.nome = fazenda.getNome();
         this.tempo = fazenda.getGrao().getTempoColeta();
         this.dataUltimaColheita = fazenda.getDataUltimaColheita();
-        fazenda.getDataUltimaColheita().add(Calendar.DATE, Math.toIntExact(fazenda.getGrao().getTempoColeta()));
+//        fazenda.getDataUltimaColheita().add(Calendar.DATE, Math.toIntExact(fazenda.getGrao().getTempoColeta()));
+        this.dataProxColheita = fazenda.getDataUltimaColheita().plusDays(fazenda.getGrao().getTempoColeta());
         this.grao = fazenda.getGrao();
 
 //        this.dataProximaColheita = dataUltimaColheita;

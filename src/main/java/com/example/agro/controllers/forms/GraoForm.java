@@ -22,7 +22,7 @@ public class GraoForm {
     @NotNull @NotEmpty
     private Empresa empresa;
     @NotNull
-    private Long tempoColeta;
+    private Integer tempoColeta;
 
     public Grao converter() {
         Grao novoGrao = new Grao();

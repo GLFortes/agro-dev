@@ -11,7 +11,7 @@ public class Grao {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String nome;
-    private Long tempoColeta;
+    private Integer tempoColeta;
 
     @ManyToOne
 //    @JoinColumn(name = "id_tipo_grao")
@@ -19,7 +19,7 @@ public class Grao {
 
     public Grao(){}
 
-    public Grao(String nome, Empresa empresa, Long tempoColeta){
+    public Grao(String nome, Empresa empresa, Integer tempoColeta){
         this.nome = nome;
         this.empresa = empresa;
         this.tempoColeta = tempoColeta;

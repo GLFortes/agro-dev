@@ -89,6 +89,14 @@ public class GraoController {
         List<Grao> graos = service.buscarPorEmpresa(id);
         return GraoDto.converter(graos);
     }
+
+    @GetMapping("/buscarOrdenado/{id}")
+    public List<GraoDto> listarPorGraoOrdenado(@PathVariable Long id){
+        List<Grao> graos = service.buscarPorGraoOrdenado(id);
+        return GraoDto.converter(graos);
+    }
+
 }
+
 
 

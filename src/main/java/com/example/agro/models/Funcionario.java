@@ -2,6 +2,7 @@ package com.example.agro.models;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
+import org.hibernate.validator.constraints.br.CPF;
 
 import javax.persistence.*;
 import javax.validation.constraints.Pattern;
@@ -19,10 +20,12 @@ public class Funcionario {
     private Long id;
     private String nome;
     private String sobrenome;
-    @Pattern(regexp = "^\\d{3}\\.\\d{3}\\.\\d{3}\\-\\d{2}$/", message = "CPF inválido")
+    //validar cpf
+    @Pattern(regexp = "^[0-9]{3}\\.[0-9]{3}\\.[0-9]{3}\\-[0-9]{2}$", message = "CPF inválido")
     private String cpf;
     private String endereco;
-    @Pattern(regexp = "^\\([1-9]{2}\\) (?:[2-8]|9[1-9])[0-9]{3}\\-[0-9]{4}$", message = "Telefone inválido")
+    //validar telefone (xx)xxxx-xxxx
+
     private String telefone;
     private String sexo;
 //    @JsonFormat(pattern="dd/MM/yyyy")
@@ -45,8 +48,8 @@ public class Funcionario {
         this.endereco = endereco;
         this.telefone = telefone;
         this.sexo = sexo;
-//        this.dataNascimento = dataNascimento;
-//        this.admissao = admissao;
+        this.dataNascimento = dataNascimento;
+        this.admissao = admissao;
         nascimentoCalendar.setTime(sdf.parse(dataNascimento));
         admissaoCalendar.setTime(sdf.parse(admissao));
         this.empresa = empresa;

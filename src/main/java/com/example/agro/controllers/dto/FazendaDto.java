@@ -6,7 +6,6 @@ import com.example.agro.models.Grao;
 import com.example.agro.services.FazendaService;
 import lombok.Getter;
 
-import java.util.Date;
 import java.util.List;
 
 @Getter
@@ -38,6 +37,14 @@ public class FazendaDto {
         Fazenda fazenda = service.buscarPorId(id).get();
         Double quantidade = fazenda.getQuilos();
         quantidade += acrescimo;
+        fazenda.setQuilos(quantidade);
+
+        return fazenda;
+    }
+    public Fazenda diminuiQuantidade(Long id, Double decrescimo, FazendaService service) {
+        Fazenda fazenda = service.buscarPorId(id).get();
+        Double quantidade = fazenda.getQuilos();
+        quantidade -= decrescimo;
         fazenda.setQuilos(quantidade);
 
         return fazenda;

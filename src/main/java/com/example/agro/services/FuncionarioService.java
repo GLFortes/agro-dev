@@ -24,6 +24,19 @@ public class FuncionarioService {
         return funcionarioRepository.save(funcionario);
     }
 
+    public Funcionario atualizaFuncionario(Funcionario funcionario){
+        Funcionario funcionarioAtualizado = funcionarioRepository.findById(funcionario.getId()).get();
+        funcionarioAtualizado.setNome(funcionario.getNome());
+        funcionarioAtualizado.setSobrenome(funcionario.getSobrenome());
+        funcionarioAtualizado.setCpf(funcionario.getCpf());
+        funcionarioAtualizado.setDataNascimento(funcionario.getDataNascimento());
+        funcionarioAtualizado.setEndereco(funcionario.getEndereco());
+        funcionarioAtualizado.setTelefone(funcionario.getTelefone());
+        funcionarioAtualizado.setSexo(funcionario.getSexo());
+        funcionarioAtualizado.setAdmissao(funcionario.getAdmissao());
+        return funcionarioRepository.save(funcionarioAtualizado);
+    }
+
     public void deletar(Long id){
         funcionarioRepository.deleteById(id);
     }

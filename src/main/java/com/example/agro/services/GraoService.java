@@ -43,6 +43,12 @@ public class GraoService {
         return (List<Grao>) graoRepository.findByEmpresaId(id);
     }
 
+    public List<Grao> buscarPorGraoOrdenado(Long id) {
+        return graoRepository.findByEmpresaIdOrderByNomeAsc(id);
+    }
 
+    public List<Object[]> ordernarPorQuantidade(Long id){
+        return graoRepository.findByEmpresaIdOrderByFazendaQuantidade(id);
+    }
 }
 

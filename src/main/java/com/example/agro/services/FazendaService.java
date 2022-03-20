@@ -1,9 +1,11 @@
 package com.example.agro.services;
 
+import com.example.agro.models.Empresa;
 import com.example.agro.models.Fazenda;
 import com.example.agro.repositories.FazendaRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,6 +24,16 @@ public class FazendaService {
         return fazendaRepository.save(fazenda);
     }
 
+    public Fazenda atualizaFazenda(Long id, Fazenda fazenda){
+        Fazenda empresaAtualizada = fazendaRepository.findById(id).get();
+        empresaAtualizada.setNome(fazenda.getNome());
+        empresaAtualizada.setEndereco(fazenda.getEndereco());
+        empresaAtualizada.setQuilos(fazenda.getQuilos());
+        empresaAtualizada.setDate(fazenda.getDate());
+        empresaAtualizada.setGrao(fazenda.getGrao());
+        return fazendaRepository.save(empresaAtualizada);
+    }
+
     public void deletaFazenda(Long id){
         fazendaRepository.deleteById(id);
     }
@@ -34,13 +46,13 @@ public class FazendaService {
         return (List<Fazenda>) fazendaRepository.findByEmpresaId(id);
     }
 
-    public Fazenda adicionaGrao(Long id, Double quilosAcrescimo){
-        Fazenda fazendaAtualizada = fazendaRepository.findById(id).get();
-        Double quantidade = fazendaAtualizada.getQuilos();
-        quantidade += quilosAcrescimo;
-        fazendaAtualizada.setQuilos(quantidade);
-        return fazendaRepository.save(fazendaAtualizada);
-    }
+//    public Fazenda adicionaGrao(Long id, Double quilosAcrescimo){
+//        Fazenda fazendaAtualizada = fazendaRepository.findById(id).get();
+//        Double quantidade = fazendaAtualizada.getQuilos();
+//        quantidade += quilosAcrescimo;
+//        fazendaAtualizada.setQuilos(quantidade);
+//        return fazendaRepository.save(fazendaAtualizada);
+//    }
 
     public int quantidadeDeFazendas(Long id){
         return fazendaRepository.countByEmpresaId(id);

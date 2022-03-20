@@ -61,23 +61,56 @@ public class FazendaController {
         return FazendaDto.converter(fazendas);
     }
 
-    @PutMapping("/aumentar/{id}")
+    @GetMapping("/fazendasDetalhes/{id}")
+    public List<FazendaListaDto> listarFazendaDetalhadaa(@PathVariable Long id){
+        List<Fazenda> fazendas = fazendaService.acharPorEmpresa(id);
+        return FazendaListaDto.converter(fazendas);
+    }
 
-    public ResponseEntity<FazendaDto> aumentarGraos(@PathVariable Long id, @RequestBody FazendaDto fazendaDto, Double quantidade){
+
+    //registrar uma colheita
+    @PutMapping("/aumentar/{id}")
+    public ResponseEntity<FazendaDto> aumentarGraos(@PathVariable Long id, @RequestParam double quantidade) throws ParseException {
         Optional<Fazenda> optional = fazendaService.buscarPorId(id);
         if(optional.isPresent()){
+            FazendaDto fazendaDto = optional.map(FazendaDto::new).get();
             Fazenda fazenda = fazendaDto.aumentaQuantidade(id, quantidade, fazendaService);
+            fazendaService.adicionarFazenda(fazenda);
             return ResponseEntity.ok(new FazendaDto(fazenda));
         }
         return ResponseEntity.notFound().build();
 
     }
 
+    @PutMapping("/diminuir/{id}")
+    public ResponseEntity<FazendaDto> diminuirGraos(@PathVariable Long id, @RequestParam double quantidade){
+        Optional<Fazenda> optional = fazendaService.buscarPorId(id);
+        if(optional.isPresent()){
+            FazendaDto fazendaDto = optional.map(FazendaDto::new).get();
+            Fazenda fazenda = fazendaDto.diminuiQuantidade(id, quantidade, fazendaService);
+            fazendaService.adicionarFazenda(fazenda);
+            return ResponseEntity.ok(new FazendaDto(fazenda));
+        }
+        return ResponseEntity.notFound().build();
+    }
+
+//    @PutMapping("/registrarColheita/{id}")
+//    public ResponseEntity<FazendaDto> registrarColheita(@PathVariable Long id, @RequestParam double quantidade){
+//        Optional<Fazenda> optional = fazendaService.buscarPorId(id);
+//        if(optional.isPresent()){
+//            FazendaDto fazendaDto = optional.map(FazendaDto::new).get();
+//            Fazenda fazenda = fazendaDto.registraColheita(id, quantidade, fazendaService);
+//            fazendaService.adicionarFazenda(fazenda);
+//            return ResponseEntity.ok(new FazendaDto(fazenda));
+//        }
+//        return ResponseEntity.notFound().build();
+//    }
     @GetMapping("/contarPorEmpresa/{id}")
     public int contarPorEmpresa(@PathVariable Long id){
         int quantidade = fazendaService.quantidadeDeFazendas(id);
         return quantidade;
     }
+
 
     @GetMapping("/proxColheita/{id}")
     public List<FazendaListaDto> listarFazendaDetalhada(@PathVariable Long id){
