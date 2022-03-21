@@ -17,8 +17,6 @@ public class Fazenda {
     private String nome;
     private String endereco;
     private Double quilos;
-    //regex date
-//  @Pattern(regexp = "^(0[1-9]|[12][0-9]|3[01])/(0[1-9]|1[012])/[0-9]{4}$", message = "Data inválida")
     private String date;
     private LocalDate dataUltimaColheita = LocalDate.now();
     private LocalDate dataProximaColheita = LocalDate.now();

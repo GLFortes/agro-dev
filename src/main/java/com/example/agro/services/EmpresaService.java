@@ -50,11 +50,6 @@ public class EmpresaService {
         repository.deleteById(id);
     }
 
-    //Busca empresa pelo nome
-//    public Optional<Empresa> buscaEmpresa(String nome) {
-//        Empresa empresa = repository.findByNome(nome);
-//        return Optional.ofNullable(empresa);
-//    }
 
     //Busca empresa pelo nome(deixei os dois métodos pois vou testar melhor após eu receber a nota
     public Empresa findByNome(String nome) {

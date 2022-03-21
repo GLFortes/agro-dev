@@ -12,13 +12,11 @@ import java.text.ParseException;
 
 @Data
 public class FuncionarioForm {
-//    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
     @NotNull
     @NotEmpty
     private String nome;
     @NotNull @NotEmpty
     private String sobrenome;
-    //valida cpf
     @Pattern(regexp = "^[0-9]{3}\\.[0-9]{3}\\.[0-9]{3}\\-[0-9]{2}$", message = "CPF inválido")
     @NotNull @NotEmpty
     private String cpf;

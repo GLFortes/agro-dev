@@ -2,10 +2,15 @@ package com.example.agro.controllers.dto;
 
 import com.example.agro.models.Fazenda;
 import com.example.agro.models.Grao;
+import lombok.Getter;
 
 import java.time.LocalDate;
 import java.util.List;
 
+/*
+* DTO utilizado para implementar a lógica de de incrementar a data das colheitas. Tentativa sem sucesso, apenas deixarei a classe aqui para eu poder modificar após a avaliação do projeto
+* */
+@Getter
 public class FazendaListaDto {
     
     private Long id;

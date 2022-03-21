@@ -1,11 +1,9 @@
 package com.example.agro.controllers;
 
-import com.example.agro.controllers.dto.EmpresaDto;
 import com.example.agro.controllers.dto.FazendaDto;
 import com.example.agro.controllers.dto.FazendaListaDto;
 import com.example.agro.controllers.dto.FazendaOrderDto;
 import com.example.agro.controllers.forms.FazendaForm;
-import com.example.agro.models.Empresa;
 import com.example.agro.models.Fazenda;
 import com.example.agro.repositories.GraoRepository;
 import com.example.agro.services.FazendaService;
