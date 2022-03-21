@@ -1,10 +1,9 @@
 package com.example.agro.controllers;
 
-import com.example.agro.controllers.dto.EmpresaDto;
 import com.example.agro.controllers.dto.FazendaDto;
 import com.example.agro.controllers.dto.FazendaListaDto;
+import com.example.agro.controllers.dto.FazendaOrderDto;
 import com.example.agro.controllers.forms.FazendaForm;
-import com.example.agro.models.Empresa;
 import com.example.agro.models.Fazenda;
 import com.example.agro.repositories.GraoRepository;
 import com.example.agro.services.FazendaService;
@@ -16,6 +15,7 @@ import javax.transaction.Transactional;
 import javax.validation.Valid;
 import java.net.URI;
 import java.text.ParseException;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -108,11 +108,14 @@ public class FazendaController {
         return quantidade;
     }
 
+    //faz um sort nos grãos de uma empresa de acordo com a quantidade de grãos pelo ID de empresa
+    @GetMapping("/ordenar/{id}")
+    public List<FazendaOrderDto> ordenarPorQuilo(@PathVariable Long id){
+        List<Fazenda> fazendas = fazendaService.ordenar(id);
+        fazendas.sort(Comparator.comparing(Fazenda::getQuilos));
+        return FazendaOrderDto.converter(fazendas);
+    }
 
-//    @GetMapping("/ordenarQuantidade/{id}")
-//        public List<FazendaDto> ordenarPorQuantidade(@PathVariable Long id){
-//            List<Fazenda> fazendas = fazendaService.ordenarPorQuantidade(id);
-//            return FazendaDto.converter(fazendas);
-//        }
+
 
 }

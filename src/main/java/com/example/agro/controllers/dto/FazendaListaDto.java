@@ -2,33 +2,30 @@ package com.example.agro.controllers.dto;
 
 import com.example.agro.models.Fazenda;
 import com.example.agro.models.Grao;
+import lombok.Getter;
 
 import java.time.LocalDate;
 import java.util.List;
 
+/*
+* DTO utilizado para implementar a lógica de de incrementar a data das colheitas. Tentativa sem sucesso, apenas deixarei a classe aqui para eu poder modificar após a avaliação do projeto
+* */
+@Getter
 public class FazendaListaDto {
     
-    Long id;
-    String nome;
-    Integer tempo;
+    private Long id;
+    private String nome;
+    private Integer tempo;
 //    Calendar dataUltimaColheita;
 //    Calendar dataProxColheita;
-    LocalDate dataUltimaColheita;
-    LocalDate dataProxColheita;
-    Grao grao;
+    private LocalDate dataUltimaColheita;
+    private LocalDate dataProxColheita;
+    private Grao grao;
     
     public FazendaListaDto(Fazenda fazenda) {
-        this.grao = fazenda.getGrao();
         this.id = fazenda.getId();
         this.nome = fazenda.getNome();
-        this.tempo = fazenda.getGrao().getTempoColeta();
-        this.dataUltimaColheita = fazenda.getDataUltimaColheita();
-//      fazenda.getDataUltimaColheita().add(Calendar.DATE, Math.toIntExact(fazenda.getGrao().getTempoColeta()));
-        this.dataProxColheita = fazenda.getDataUltimaColheita().plusDays(fazenda.getGrao().getTempoColeta());
-
-
-//        this.dataProximaColheita = dataUltimaColheita;
-//        dataProximaColheita.add(Calendar.DATE, grao.getTempoColeta());
+        this.dataProxColheita = fazenda.getDataProximaColheita().plusDays(fazenda.getGrao().getTempoColeta());
     }
 
     public static List<FazendaListaDto> converter(List<Fazenda> fazendas) {

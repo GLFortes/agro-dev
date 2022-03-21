@@ -53,9 +53,6 @@ public class GraoService {
         return (List<Grao>) graoRepository.findByEmpresaId(id);
     }
 
-    public List<Grao> buscarPorGraoOrdenado(Long id) {
-        return graoRepository.findByEmpresaIdOrderByNomeAsc(id);
-    }
 
 }
 

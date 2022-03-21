@@ -2,6 +2,7 @@ package com.example.agro.repositories;
 
 import com.example.agro.models.Grao;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -15,4 +16,5 @@ public interface GraoRepository extends JpaRepository<Grao, Long> {
 
     //Ordenar Grãos por ordem alfabética
     List<Grao> findByEmpresaIdOrderByNomeAsc(Long id);
+
 }

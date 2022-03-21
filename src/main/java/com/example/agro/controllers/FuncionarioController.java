@@ -30,12 +30,6 @@ public class FuncionarioController {
         return FuncionarioDto.converter(funcionarios);
     }
 
-//    @PostMapping
-//    @Transactional
-//    public Funcionario adicionarFuncionario(@RequestBody FuncionarioForm form){
-//        return service.cadastrarFuncionario(form.converter());
-//    }
-
     //Cadatastra um novo funcionário
     @PostMapping
     @Transactional
